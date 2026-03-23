@@ -5,6 +5,12 @@ if (session_status() == PHP_SESSION_NONE) {
 include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        header("Location: index.php");
+        exit;
+    }
+    
     $email = trim($_POST['email']);
     $parola = $_POST['parola'];
 
@@ -18,15 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($parola, $user['parola'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nume'] = $user['nume'];
-            $_SESSION['rol'] = $user['rol']; // Aici se salvează rolul!
-            
-            header("Location: index.php");
+            $_SESSION['rol'] = $user['rol'];
+
+            header("Location: index.php?login=succes");
             exit;
         } else {
-            echo "<script>alert('Parolă incorectă.'); window.location.href='index.php';</script>";
+            header("Location: index.php?login=eroare_parola");
+            exit;
         }
     } else {
-        echo "<script>alert('Utilizatorul nu a fost găsit.'); window.location.href='index.php';</script>";
+        header("Location: index.php?login=eroare_email");
+        exit;
     }
     $stmt->close();
 }

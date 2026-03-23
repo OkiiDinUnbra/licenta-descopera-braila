@@ -41,40 +41,7 @@ $venituri_totale = $total_bilete * 2.50; // Prețul unui bilet
 
 ?>
 
-<style>
-    .stats-dashboard { padding: 120px 20px 60px; max-width: 1100px; margin: auto; min-height: 80vh; font-family: 'Segoe UI', sans-serif;}
-    .stats-dashboard h1 { margin-bottom: 30px; color: #333; font-size: 32px; border-bottom: 3px solid #0056b3; display: inline-block; padding-bottom: 10px;}
-    
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px; }
-    
-    .stat-card {
-        background: #fff; padding: 25px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-        display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;
-        transition: transform 0.3s; border: 1px solid #eee;
-    }
-    .stat-card:hover { transform: translateY(-5px); }
-    
-    .stat-card::before {
-        content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
-    }
-    .card-blue::before { background: #0056b3; }
-    .card-green::before { background: #28a745; }
-    .card-purple::before { background: #6f42c1; }
-    .card-orange::before { background: #fd7e14; }
 
-    .stat-icon { font-size: 30px; margin-bottom: 10px; }
-    .stat-value { font-size: 36px; font-weight: 800; color: #222; margin-bottom: 5px; }
-    .stat-title { font-size: 15px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
-    .stat-subtitle { font-size: 13px; color: #888; margin-top: 8px; }
-
-    .top-events-table { width: 100%; background: #fff; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-collapse: collapse; overflow: hidden; }
-    .top-events-table th { background: #0056b3; color: white; padding: 15px; text-align: left; }
-    .top-events-table td { padding: 15px; border-bottom: 1px solid #eee; }
-    .top-events-table tr:last-child td { border-bottom: none; }
-    .top-events-table tr:hover { background: #f8f9fa; }
-    
-    .badge-views { background: #eef5ff; color: #0056b3; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 14px;}
-</style>
 
 <section class="stats-dashboard">
     <h1>📈 Panou de Control Administrator</h1>

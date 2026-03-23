@@ -23,9 +23,14 @@ $qr_image_url = '';
 
 // 1. Generăm biletul DOAR dacă utilizatorul a apăsat butonul de Cumpărare (POST request)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $cod_unic = 'BR_' . strtoupper(uniqid()) . '_' . rand(1000, 9999);
-    $data_achizitie = date('Y-m-d H:i:s');
-    $data_expirare = date('Y-m-d H:i:s', strtotime('+60 minutes')); 
+    if (!isset($_POST['payment_token']) || 
+        !isset($_SESSION['payment_token']) || 
+        $_POST['payment_token'] !== $_SESSION['payment_token']) {
+        header("Location: transport.php");
+        exit;
+    }
+    unset($_SESSION['payment_token']); // invalideaza tokenul dupa folosire
+}
 
     $stmt = $conn->prepare("INSERT INTO bilete_achizitionate (user_id, cod_qr_unic, data_achizitie, data_expirare, status) VALUES (?, ?, ?, ?, 'activ')");
     $stmt->bind_param("isss", $user_id, $cod_unic, $data_achizitie, $data_expirare);

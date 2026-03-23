@@ -15,12 +15,16 @@
         <span class="close-btn" onclick="closePopup('loginPopup')">×</span>
         <h2>Autentificare</h2>
         <form method="POST" action="login.php">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             <input type="email" name="email" placeholder="Email" required>
             <div style="position: relative; margin-bottom: 12px;">
                 <input type="password" name="parola" id="loginParola" placeholder="Parolă" required style="margin-bottom: 0; padding-right: 40px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;" onclick="togglePassword('loginParola', this)">👁️</span>
             </div>
-            <a href="#" class="forgot-link" style="margin-top: 5px;">Ai uitat parola?</a>
+            <a href="#" class="forgot-link" style="margin-top: 5px;" 
+             onclick="showToast('Resetarea parolei nu este disponibilă momentan. Contactează administratorul.', 'info'); return false;">
+            Ai uitat parola?
+            </a>
             <button type="submit">Autentifică-te</button>
         </form>
     </div>
@@ -31,6 +35,7 @@
         <span class="close-btn" onclick="closePopup('registerPopup')">×</span>
         <h2>Înregistrare</h2>
         <form method="POST" action="register.php">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             <input type="text" name="nume" placeholder="Nume complet" required>
             <input type="email" name="email" placeholder="Email" required>
             
@@ -38,6 +43,10 @@
                 <input type="password" name="parola" id="regParola" placeholder="Parolă" required style="margin-bottom: 0; padding-right: 40px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;" onclick="togglePassword('regParola', this)">👁️</span>
             </div>
+        
+            <small style="color: #888; font-size: 12px; display: block; margin-top: -8px; margin-bottom: 10px;">
+             Minim 8 caractere, o majusculă și o cifră.
+            </small>
             
             <div style="position: relative; margin-bottom: 12px;">
                 <input type="password" name="confirmare" id="regConfirmare" placeholder="Confirmare parolă" required style="margin-bottom: 0; padding-right: 40px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
@@ -45,6 +54,10 @@
             </div>
 
             <input type="text" name="telefon" placeholder="Număr de telefon" required>
+
+            <small style="color: #888; font-size: 12px; display: block; margin-top: -8px; margin-bottom: 10px;">
+             Format acceptat: 0722123456 sau +40722123456
+            </small>
 
             <div class="checkbox-wrapper">
                 <label>
@@ -152,6 +165,7 @@
     }
     .toast-success { background: #28a745; }
     .toast-error { background: #dc3545; }
+    .toast-info { background: #0056b3; }
 </style>
 
 <div id="toast-container"></div>
@@ -187,52 +201,44 @@
     }
 
     // 3. Afisare Pop-up Evenimente + Logica de Harta In-App
-    function openEventPopup(id, title, date, location, description) {
-        document.getElementById('modalEventTitle').innerText = title;
-        document.getElementById('modalEventDate').innerText = date;
-        document.getElementById('modalEventLocation').innerText = location || 'Nespecificat';
-        document.getElementById('modalEventDescription').innerText = description || 'Nu există o descriere pentru acest eveniment.';
-        fetch('track_view.php?id=' + id);
+    // 3. Afisare Pop-up Evenimente + Logica de Harta In-App
+function openEventPopup(id, title, date, location, description) {
+    document.getElementById('modalEventTitle').innerText = title;
+    document.getElementById('modalEventDate').innerText = date;
+    document.getElementById('modalEventLocation').innerText = location || 'Nespecificat';
+    document.getElementById('modalEventDescription').innerText = description || 'Nu există o descriere pentru acest eveniment.';
+    fetch('track_view.php?id=' + id);
 
-        document.getElementById('modalEventTitle').innerText = title;
-        
-        let mapBtn = document.getElementById('btnMapEvent');
-        if (location && location !== 'Nespecificat') {
-            mapBtn.style.display = 'inline-block';
-            
-            mapBtn.onclick = function(e) {
-                e.preventDefault(); 
-                
-                // URL OFICIAL PENTRU GOOGLE MAPS EMBED
-                let embedUrl = 'https://maps.google.com/maps?q=' + encodeURIComponent(location + ', Braila, Romania') + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
-                
-                document.getElementById('googleMapIframe').src = embedUrl;
-                
-                closePopup('eventDetailsPopup');
-                setTimeout(() => {
-                    openPopup('mapPopup');
-                }, 300);
-            };
-        } else {
-            mapBtn.style.display = 'none';
-        }
-
-        let adminControls = document.getElementById('adminEventControls');
-        let btnEdit = document.getElementById('btnEditEvent');
-        let btnDelete = document.getElementById('btnDeleteEvent');
-        
-        <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
-            adminControls.style.display = 'block';
-            if (btnEdit && btnDelete) {
-                btnEdit.href = 'editeaza_eveniment.php?id=' + id;
-                btnDelete.href = 'sterge_eveniment.php?id=' + id;
-            }
-        <?php else: ?>
-            adminControls.style.display = 'none';
-        <?php endif; ?>
-        
-        openPopup('eventDetailsPopup');
+    let mapBtn = document.getElementById('btnMapEvent');
+    if (location && location !== 'Nespecificat') {
+        mapBtn.style.display = 'inline-block';
+        mapBtn.onclick = function(e) {
+            e.preventDefault();
+            let embedUrl = 'https://maps.google.com/maps?q=' + encodeURIComponent(location + ', Braila, Romania') + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+            document.getElementById('googleMapIframe').src = embedUrl;
+            closePopup('eventDetailsPopup');
+            setTimeout(() => { openPopup('mapPopup'); }, 300);
+        };
+    } else {
+        mapBtn.style.display = 'none';
     }
+
+    let adminControls = document.getElementById('adminEventControls');
+    let btnEdit = document.getElementById('btnEditEvent');
+    let btnDelete = document.getElementById('btnDeleteEvent');
+    
+    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
+        adminControls.style.display = 'block';
+        if (btnEdit && btnDelete) {
+            btnEdit.href = 'editeaza_eveniment.php?id=' + id;
+            btnDelete.href = 'sterge_eveniment.php?id=' + id;
+        }
+    <?php else: ?>
+        adminControls.style.display = 'none';
+    <?php endif; ?>
+    
+    openPopup('eventDetailsPopup');
+}
 
     // 4. Logica Toast Messages
     function showToast(message, type = 'success') {
@@ -271,14 +277,27 @@
             showToast('Cont creat cu succes! Acum te poți autentifica.', 'success');
             openPopup('loginPopup');
         }
-        if (urlParams.get('register') === 'eroare_parole') {
-            showToast('Parolele introduse nu se potrivesc.', 'error');
-            openPopup('registerPopup');
-        }
+       if (urlParams.get('register') === 'eroare_parola_scurta') {
+    showToast('Parola trebuie să aibă minim 8 caractere.', 'error');
+    openPopup('registerPopup');
+}
+if (urlParams.get('register') === 'eroare_parola_slaba') {
+    showToast('Parola trebuie să conțină cel puțin o majusculă și o cifră.', 'error');
+    openPopup('registerPopup');
+}
         if (urlParams.get('register') === 'eroare_duplicat') {
             showToast('Acest email este deja folosit.', 'error');
             openPopup('registerPopup');
         }
+        if (urlParams.get('register') === 'eroare_server') {
+          showToast('A apărut o eroare. Încearcă din nou.', 'error');
+           openPopup('registerPopup');
+            }
+
+            if (urlParams.get('register') === 'eroare_telefon') {
+    showToast('Numărul de telefon nu este valid. Exemplu: 0722123456', 'error');
+    openPopup('registerPopup');
+}
 
         if(window.history.replaceState && (urlParams.has('login') || urlParams.has('register'))) {
             window.history.replaceState(null, null, window.location.pathname);

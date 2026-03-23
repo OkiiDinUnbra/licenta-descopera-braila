@@ -23,8 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     
     if ($stmt_update->execute()) {
         $mesaj = "<div style='color: green; background: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>Eveniment actualizat cu succes!</div>";
-    } else {
-        $mesaj = "<div style='color: red; background: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>Eroare la actualizare!</div>";
+    } // NOU
+} else {
+    error_log("Eroare actualizare eveniment: " . $stmt_update->error);
+    $mesaj = "<div style='color: red; background: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>❌ A apărut o eroare. Încearcă din nou.</div>";
+}
     }
     $stmt_update->close();
 }
