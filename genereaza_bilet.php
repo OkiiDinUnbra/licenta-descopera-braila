@@ -15,26 +15,28 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $nume_utilizator = $_SESSION['nume'];
 
-// 1. Generăm datele biletului
-$cod_unic = 'BR_' . strtoupper(uniqid()) . '_' . rand(1000, 9999); // Ex: BR_65E4A..._4592
-$data_achizitie = date('Y-m-d H:i:s');
-$data_expirare = date('Y-m-d H:i:s', strtotime('+60 minutes')); // Valabil exact 60 de minute!
-
 $mesaj_succes = false;
+$cod_unic = '';
+$data_achizitie = '';
+$data_expirare = '';
+$qr_image_url = '';
 
-// 2. Inserăm biletul în baza de date
+// 1. Generăm biletul DOAR dacă utilizatorul a apăsat butonul de Cumpărare (POST request)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $cod_unic = 'BR_' . strtoupper(uniqid()) . '_' . rand(1000, 9999);
+    $data_achizitie = date('Y-m-d H:i:s');
+    $data_expirare = date('Y-m-d H:i:s', strtotime('+60 minutes')); 
+
     $stmt = $conn->prepare("INSERT INTO bilete_achizitionate (user_id, cod_qr_unic, data_achizitie, data_expirare, status) VALUES (?, ?, ?, ?, 'activ')");
     $stmt->bind_param("isss", $user_id, $cod_unic, $data_achizitie, $data_expirare);
     
     if ($stmt->execute()) {
         $mesaj_succes = true;
+        // Generăm imaginea QR doar dacă s-a salvat cu succes în baza de date
+        $qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($cod_unic);
     }
     $stmt->close();
 }
-
-// 3. API-ul care ne desenează codul QR pe baza codului unic
-$qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($cod_unic);
 ?>
 
 <style>
@@ -61,8 +63,8 @@ $qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
 <section class="bilet-container">
 
     <?php if (!$mesaj_succes): ?>
-        <h2>A apărut o eroare la procesarea plății.</h2>
-        <a href="transport.php" class="btn">Încearcă din nou</a>
+        <h2>A apărut o eroare la procesarea plății sau pagina a fost accesată incorect.</h2>
+        <a href="transport.php" class="btn" style="display:inline-block; margin-top: 20px;">Înapoi la Transport</a>
     <?php else: ?>
         
         <div id="loadingSec" class="loading-plata" style="display: block;">
@@ -104,17 +106,15 @@ $qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
         </div>
 
         <script>
-            // Simulăm timpul de plată (2 secunde)
             setTimeout(function() {
                 document.getElementById('loadingSec').style.display = 'none';
                 document.getElementById('biletSec').style.display = 'block';
                 startTimer();
             }, 2000);
 
-            // Funcția pentru cronometrul de 60 de minute
             function startTimer() {
-                // Setăm data expirării luată din PHP (trebuie transformată pt JS)
-                var expireTime = new Date("<?= date('M d, Y H:i:s', strtotime($data_expirare)) ?>").getTime();
+                // IMPORTANT: Asigură formatul cross-browser luând date din PHP formatate corect
+                var expireTime = new Date("<?= date('Y/m/d H:i:s', strtotime($data_expirare)) ?>").getTime();
                 
                 var x = setInterval(function() {
                     var now = new Date().getTime();
@@ -123,7 +123,6 @@ $qr_image_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // Adăugăm un zero în față dacă e sub 10
                     minutes = minutes < 10 ? "0" + minutes : minutes;
                     seconds = seconds < 10 ? "0" + seconds : seconds;
 
