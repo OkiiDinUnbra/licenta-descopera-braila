@@ -1,4 +1,4 @@
-/* Import font Google */
+﻿/* Import font Google */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 /* Reset general */
@@ -293,3 +293,257 @@ section h2 {
 /* X (Twitter): negru */
 .contact-social-list li a.x-link { color: #000000; background: #f0f0f0; border-color: #e0e0e0; }
 .contact-social-list li a.x-link:hover { background: #e0e0e0; }
+
+
+/* ===== FORMULARE ADMIN ===== */
+.form-admin-section {
+    padding: 120px 20px 60px;
+    max-width: 600px;
+    margin: auto;
+    min-height: 70vh;
+}
+
+.form-admin-section h2 {
+    margin-bottom: 20px;
+}
+
+.form-admin-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.form-group-admin {
+    margin-bottom: 15px;
+}
+
+.form-group-admin label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group-admin input,
+.form-group-admin select,
+.form-group-admin textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.form-admin-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn-back {
+    color: #555;
+    text-decoration: none;
+}
+
+.btn-save {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mesaj-succes {
+    color: green;
+    background: #d4edda;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.mesaj-eroare {
+    color: red;
+    background: #f8d7da;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* ===== STATISTICI ADMIN ===== */
+.stats-dashboard {
+    padding: 120px 20px 60px;
+    max-width: 1100px;
+    margin: auto;
+    min-height: 80vh;
+}
+
+.stats-dashboard h1 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 32px;
+    border-bottom: 3px solid #0056b3;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    border: 1px solid #eee;
+}
+
+.stat-card:hover { transform: translateY(-5px); }
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px;
+    height: 100%;
+}
+
+.card-blue::before { background: #0056b3; }
+.card-green::before { background: #28a745; }
+.card-purple::before { background: #6f42c1; }
+.card-orange::before { background: #fd7e14; }
+
+.stat-icon { font-size: 30px; margin-bottom: 10px; }
+.stat-value { font-size: 36px; font-weight: 800; color: #222; margin-bottom: 5px; }
+.stat-title { font-size: 15px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.stat-subtitle { font-size: 13px; color: #888; margin-top: 8px; }
+
+.top-events-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.top-events-table th {
+    background: #0056b3;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.top-events-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.top-events-table tr:last-child td { border-bottom: none; }
+.top-events-table tr:hover { background: #f8f9fa; }
+
+.badge-views {
+    background: #eef5ff;
+    color: #0056b3;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+/* ===== TRANSPORT ===== */
+.hero-transport {
+    background: url('img/hero-braila.jpg') no-repeat center center/cover;
+    color: white;
+    padding: 100px 20px 60px;
+    text-align: center;
+    margin-top: 70px;
+    position: relative;
+}
+
+.hero-transport::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+}
+
+.hero-transport > * { position: relative; z-index: 2; }
+.hero-transport h1 { font-size: 42px; margin-bottom: 15px; }
+
+.transport-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.card-modul {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.card-modul h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 10px;
+}
+
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+.form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; }
+
+.btn-full {
+    display: block;
+    width: 100%;
+    background: #ffd700;
+    color: #000;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.btn-full:hover { background: #e6c200; }
+
+.ticket-demo {
+    background: #f9f9f9;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.bilet-info { font-size: 14px; color: #666; margin-bottom: 15px; }

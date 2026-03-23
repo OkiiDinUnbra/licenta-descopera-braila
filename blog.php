@@ -10,12 +10,12 @@ include 'header.php';
             <div class="post">
                 <h3>5 lucruri pe care nu le știai despre Brăila</h3>
                 <p>Istorie, gastronomie, tradiții – lucruri care te vor surprinde.</p>
-                <a href="#">Citește mai mult</a>
+                <a href="#" onclick="showToast('Articolul va fi disponibil în curând!', 'info'); return false;">Citește mai mult</a>
             </div>
             <div class="post">
                 <h3>Trasee de o zi prin județ</h3>
                 <p>Recomandări de excursii și locuri de descoperit în natură.</p>
-                <a href="#">Citește mai mult</a>
+                <a href="#" onclick="showToast('Articolul va fi disponibil în curând!', 'info'); return false;">Citește mai mult</a>
             </div>
         </div>
     </div>

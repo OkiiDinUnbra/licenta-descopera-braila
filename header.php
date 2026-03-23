@@ -9,7 +9,8 @@ $page_title = isset($page_title) ? $page_title : "Descoperă Brăila";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $page_title ?></title>
-    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
+    <!-- NOU -->
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
     
     <?php if(isset($needs_calendar) && $needs_calendar): ?>
         <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />

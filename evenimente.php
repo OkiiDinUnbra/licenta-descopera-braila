@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 $page_title = "Evenimente | Descoperă Brăila";
 include 'header.php'; 
 ?>
