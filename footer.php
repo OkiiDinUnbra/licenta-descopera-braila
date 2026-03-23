@@ -138,7 +138,7 @@
         if (location && location !== 'Nespecificat') {
             mapBtn.style.display = 'inline-block';
             // Construim link-ul de căutare Google Maps (Adăugăm "Braila" ca să caute precis în oraș)
-            mapBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location + ', Braila, Romania');
+           mapBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location + ', Braila, Romania');
         } else {
             mapBtn.style.display = 'none';
         }
@@ -164,9 +164,13 @@
 </script>
 <script>
     // 1. Funcții generale pentru pop-up-uri
-    function openPopup(id) {
-        document.getElementById(id).style.display = 'flex';
-    }
+   function openPopup(id) {
+    const popup = document.getElementById(id);
+    popup.style.display = 'flex';
+    setTimeout(() => {
+        popup.classList.add('active');
+    }, 10);
+}
     
     function closePopup(id) {
         document.getElementById(id).style.display = 'none';
