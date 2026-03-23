@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 $page_title = "Evenimente | Descoperă Brăila";
 include 'header.php'; 
 ?>
@@ -24,16 +24,16 @@ include 'header.php';
 
     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
         <div style="margin-bottom: 20px;">
-            <a href="admin.php" class="btn" style="background-color: #333; color: #fff; padding: 10px 20px; border-radius: 8px;">⚙️ Panou Adăugare Evenimente</a>
+            <a href="adauga_eveniment.php" class="btn" style="background-color: #333; color: #fff; padding: 10px 20px; border-radius: 8px;">⚙️ Adaugă Eveniment Nou</a>
         </div>
     <?php endif; ?>
 
     <div class="evenimente-grid">
-        <a href="evenimente-culturale.php" class="eveniment-card">
+        <a href="calendar.php?categorie=cultural" class="eveniment-card">
             <img src="img/cultural-bg.jpg" alt="Evenimente Culturale">
             <h3>Evenimente Culturale</h3>
         </a>
-        <a href="evenimente-sportive.php" class="eveniment-card">
+        <a href="calendar.php?categorie=sportiv" class="eveniment-card">
             <img src="img/sport-bg.jpg" alt="Evenimente Sportive">
             <h3>Evenimente Sportive</h3>
         </a>
