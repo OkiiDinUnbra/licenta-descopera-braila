@@ -12,7 +12,7 @@
 
 <div id="loginPopup" class="popup-overlay">
     <div class="popup-box">
-        <span class="close-btn" onclick="closePopup('loginPopup')">&times;</span>
+        <span class="close-btn" onclick="closePopup('loginPopup')">×</span>
         <h2>Autentificare</h2>
         <form method="POST" action="login.php">
             <input type="email" name="email" placeholder="Email" required>
@@ -28,7 +28,7 @@
 
 <div id="registerPopup" class="popup-overlay">
      <div class="popup-box">
-        <span class="close-btn" onclick="closePopup('registerPopup')">&times;</span>
+        <span class="close-btn" onclick="closePopup('registerPopup')">×</span>
         <h2>Înregistrare</h2>
         <form method="POST" action="register.php">
             <input type="text" name="nume" placeholder="Nume complet" required>
@@ -59,28 +59,44 @@
 </div>
 
 <div id="contactPopup" class="popup-overlay">
-    <div class="popup-box">
-        <span class="close-btn" onclick="closePopup('contactPopup')">&times;</span>
-        <h2>Contactează-ne</h2>
-        <p>Urmărește-ne pe rețelele sociale:</p>
-        <ul class="contact-info">
-            <li><a href="https://www.facebook.com/andrei.filote.50/" target="_blank">Facebook</a></li>
-            <li><a href="https://www.instagram.com/fmandrei/" target="_blank">Instagram</a></li>
-            <li><a href="https://x.com/MAFilot" target="_blank">X (Twitter)</a></li>
+    <div class="popup-box" style="width: 400px; padding: 30px;">
+        <span class="close-btn" onclick="closePopup('contactPopup')">×</span>
+        <h2 style="text-align: center; color: #333; margin-bottom: 10px;">🔗 Rămâi Conectat</h2>
+        <p style="text-align: center; color: #666; font-size: 15px; margin-bottom: 25px;">Urmărește-ne pe rețelele sociale pentru noutăți și evenimente!</p>
+        
+        <ul class="contact-social-list">
+            <li>
+                <a href="https://www.facebook.com/andrei.filote.50/" target="_blank" class="fb-link">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook Oficial</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/fmandrei/" target="_blank" class="insta-link">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram @fmandrei</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://x.com/MAFilot" target="_blank" class="x-link">
+                    <i class="fab fa-x-twitter"></i>
+                    <span>Urmărește-ne pe X</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
 
 <div id="eventDetailsPopup" class="popup-overlay">
     <div class="popup-box" style="width: 450px; text-align: left;">
-        <span class="close-btn" onclick="closePopup('eventDetailsPopup')">&times;</span>
+        <span class="close-btn" onclick="closePopup('eventDetailsPopup')">×</span>
         <h2 id="modalEventTitle" style="margin-bottom: 15px; text-align: center; color: #333; font-weight: 700;">Titlu Eveniment</h2>
         
         <div style="background: #f8f9fa; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
             <p style="margin-bottom: 8px; font-size: 16px;"><strong>📅 Data:</strong> <span id="modalEventDate" style="color: #0056b3;"></span></p>
             <p style="margin-bottom: 0; font-size: 16px; display: flex; justify-content: space-between; align-items: center;">
                 <span><strong>📍 Locație:</strong> <span id="modalEventLocation"></span></span>
-                <a id="btnMapEvent" href="#" target="_blank" style="background: #eef5ff; color: #0056b3; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #cce5ff; transition: 0.2s;">🗺️ Deschide Harta</a>
+                <a id="btnMapEvent" href="#" style="background: #eef5ff; color: #0056b3; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 13px; font-weight: bold; border: 1px solid #cce5ff; transition: 0.2s;">🗺️ Deschide Harta</a>
             </p>
         </div>
         
@@ -94,120 +110,16 @@
     </div>
 </div>
 
-<script>
-    // 1. Funcții generale pentru pop-up-uri cu animație modernă
-    function openPopup(id) {
-        const popup = document.getElementById(id);
-        popup.style.display = 'flex';
-        // Forțăm reflow-ul pentru a porni animația CSS
-        setTimeout(() => {
-            popup.classList.add('active');
-        }, 10);
-    }
-    
-    function closePopup(id) {
-        const popup = document.getElementById(id);
-        popup.classList.remove('active');
-        // Așteptăm să se termine animația înainte să ascundem div-ul
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 300);
-    }
-
-    // 2. Funcția pentru arătat/ascuns parola
-    function togglePassword(inputId, icon) {
-        const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.innerText = "🙈";
-        } else {
-            input.type = "password";
-            icon.innerText = "👁️";
-        }
-    }
-
-    // 3. Funcția care populează fereastra de eveniment
-    function openEventPopup(id, title, date, location, description) {
-        document.getElementById('modalEventTitle').innerText = title;
-        document.getElementById('modalEventDate').innerText = date;
-        document.getElementById('modalEventLocation').innerText = location || 'Nespecificat';
-        document.getElementById('modalEventDescription').innerText = description || 'Nu există o descriere pentru acest eveniment.';
+<div id="mapPopup" class="popup-overlay">
+    <div class="popup-box" style="width: 700px; max-width: 95%; padding: 20px;">
+        <span class="close-btn" onclick="closePopup('mapPopup')">×</span>
+        <h2 style="margin-bottom: 15px; text-align: center; color: #333; font-weight: 700;">📍 Locație Eveniment</h2>
         
-        // --- LOGICA PENTRU BUTONUL DE HARTĂ ---
-        let mapBtn = document.getElementById('btnMapEvent');
-        if (location && location !== 'Nespecificat') {
-            mapBtn.style.display = 'inline-block';
-            // Construim link-ul de căutare Google Maps (Adăugăm "Braila" ca să caute precis în oraș)
-           mapBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location + ', Braila, Romania');
-        } else {
-            mapBtn.style.display = 'none';
-        }
-
-        // --- LOGICA PENTRU BUTOANELE DE ADMIN ---
-        let adminControls = document.getElementById('adminEventControls');
-        let btnEdit = document.getElementById('btnEditEvent');
-        let btnDelete = document.getElementById('btnDeleteEvent');
-        
-        // Verificăm dacă suntem logați ca admin (dacă butoanele există în sesiune)
-        <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
-            adminControls.style.display = 'block';
-            if (btnEdit && btnDelete) {
-                btnEdit.href = 'editeaza_eveniment.php?id=' + id;
-                btnDelete.href = 'sterge_eveniment.php?id=' + id;
-            }
-        <?php else: ?>
-            adminControls.style.display = 'none';
-        <?php endif; ?>
-        
-        openPopup('eventDetailsPopup');
-    }
-</script>
-<script>
-    // 1. Funcții generale pentru pop-up-uri
-   function openPopup(id) {
-    const popup = document.getElementById(id);
-    popup.style.display = 'flex';
-    setTimeout(() => {
-        popup.classList.add('active');
-    }, 10);
-}
-    
-    function closePopup(id) {
-        document.getElementById(id).style.display = 'none';
-    }
-
-    // 2. Funcția pentru arătat/ascuns parola
-    function togglePassword(inputId, icon) {
-        const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.innerText = "🙈";
-        } else {
-            input.type = "password";
-            icon.innerText = "👁️";
-        }
-    }
-
-    // 3. Funcția care populează fereastra de eveniment și îi setează ID-ul pentru admin
-    function openEventPopup(id, title, date, location, description) {
-        document.getElementById('modalEventTitle').innerText = title;
-        document.getElementById('modalEventDate').innerText = date;
-        document.getElementById('modalEventLocation').innerText = location || 'Nespecificat';
-        document.getElementById('modalEventDescription').innerText = description || 'Nu există o descriere pentru acest eveniment.';
-        
-        // --- LOGICA PENTRU BUTOANELE DE ADMIN ---
-        let btnEdit = document.getElementById('btnEditEvent');
-        let btnDelete = document.getElementById('btnDeleteEvent');
-        
-        // Dacă butoanele există în HTML (adică ești logat ca admin)
-        if (btnEdit && btnDelete) {
-            btnEdit.href = 'editeaza_eveniment.php?id=' + id;
-            btnDelete.href = 'sterge_eveniment.php?id=' + id;
-        }
-        
-        openPopup('eventDetailsPopup');
-    }
-</script>
+        <div style="width: 100%; height: 450px; border-radius: 12px; overflow: hidden; background: #eee; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
+            <iframe id="googleMapIframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
+        </div>
+    </div>
+</div>
 
 <style>
     #toast-container {
@@ -238,13 +150,91 @@
         opacity: 1;
         transform: translateX(0);
     }
-    .toast-success { background: #28a745; } /* Verde */
-    .toast-error { background: #dc3545; }   /* Roșu */
+    .toast-success { background: #28a745; }
+    .toast-error { background: #dc3545; }
 </style>
 
 <div id="toast-container"></div>
 
 <script>
+    // 1. Funcții Pop-up Moderne
+    function openPopup(id) {
+        const popup = document.getElementById(id);
+        popup.style.display = 'flex';
+        setTimeout(() => {
+            popup.classList.add('active');
+        }, 10);
+    }
+    
+    function closePopup(id) {
+        const popup = document.getElementById(id);
+        popup.classList.remove('active');
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300);
+    }
+
+    // 2. Parola Arata/Ascunde
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.innerText = "🙈";
+        } else {
+            input.type = "password";
+            icon.innerText = "👁️";
+        }
+    }
+
+    // 3. Afisare Pop-up Evenimente + Logica de Harta In-App
+    function openEventPopup(id, title, date, location, description) {
+        document.getElementById('modalEventTitle').innerText = title;
+        document.getElementById('modalEventDate').innerText = date;
+        document.getElementById('modalEventLocation').innerText = location || 'Nespecificat';
+        document.getElementById('modalEventDescription').innerText = description || 'Nu există o descriere pentru acest eveniment.';
+        fetch('track_view.php?id=' + id);
+
+        document.getElementById('modalEventTitle').innerText = title;
+        
+        let mapBtn = document.getElementById('btnMapEvent');
+        if (location && location !== 'Nespecificat') {
+            mapBtn.style.display = 'inline-block';
+            
+            mapBtn.onclick = function(e) {
+                e.preventDefault(); 
+                
+                // URL OFICIAL PENTRU GOOGLE MAPS EMBED
+                let embedUrl = 'https://maps.google.com/maps?q=' + encodeURIComponent(location + ', Braila, Romania') + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+                
+                document.getElementById('googleMapIframe').src = embedUrl;
+                
+                closePopup('eventDetailsPopup');
+                setTimeout(() => {
+                    openPopup('mapPopup');
+                }, 300);
+            };
+        } else {
+            mapBtn.style.display = 'none';
+        }
+
+        let adminControls = document.getElementById('adminEventControls');
+        let btnEdit = document.getElementById('btnEditEvent');
+        let btnDelete = document.getElementById('btnDeleteEvent');
+        
+        <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
+            adminControls.style.display = 'block';
+            if (btnEdit && btnDelete) {
+                btnEdit.href = 'editeaza_eveniment.php?id=' + id;
+                btnDelete.href = 'sterge_eveniment.php?id=' + id;
+            }
+        <?php else: ?>
+            adminControls.style.display = 'none';
+        <?php endif; ?>
+        
+        openPopup('eventDetailsPopup');
+    }
+
+    // 4. Logica Toast Messages
     function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -254,24 +244,20 @@
         toast.innerHTML = `<span style="font-size: 18px;">${icon}</span> <span>${message}</span>`;
         container.appendChild(toast);
 
-        // Declanșăm animația de intrare
         setTimeout(() => toast.classList.add('show'), 100);
 
-        // Curățăm notificarea după 4 secunde
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 400); 
         }, 4000);
     }
 
-    // Așteptăm să se încarce pagina și citim URL-ul
     document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
         
-        // --- MESAJE PENTRU LOGIN ---
         if (urlParams.get('login') === 'eroare_parola') {
             showToast('Parola introdusă este incorectă!', 'error');
-            openPopup('loginPopup'); // Îi deschidem automat pop-up-ul iar
+            openPopup('loginPopup');
         }
         if (urlParams.get('login') === 'eroare_email') {
             showToast('Nu am găsit niciun cont cu acest email.', 'error');
@@ -281,10 +267,9 @@
             showToast('Te-ai autentificat cu succes!', 'success');
         }
 
-        // --- MESAJE PENTRU ÎNREGISTRARE ---
         if (urlParams.get('register') === 'succes') {
             showToast('Cont creat cu succes! Acum te poți autentifica.', 'success');
-            openPopup('loginPopup'); // Îl invităm să se logheze direct
+            openPopup('loginPopup');
         }
         if (urlParams.get('register') === 'eroare_parole') {
             showToast('Parolele introduse nu se potrivesc.', 'error');
@@ -295,7 +280,6 @@
             openPopup('registerPopup');
         }
 
-        // Ștergem parametrii din URL ca să nu apară mesajul din nou dacă dă refresh
         if(window.history.replaceState && (urlParams.has('login') || urlParams.has('register'))) {
             window.history.replaceState(null, null, window.location.pathname);
         }
