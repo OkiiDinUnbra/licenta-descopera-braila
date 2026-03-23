@@ -9,7 +9,7 @@ $page_title = isset($page_title) ? $page_title : "Descoperă Brăila";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $page_title ?></title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
     
     <?php if(isset($needs_calendar) && $needs_calendar): ?>
         <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
@@ -28,6 +28,7 @@ $page_title = isset($page_title) ? $page_title : "Descoperă Brăila";
                 <li><a href="ghid.php">Ghid Turistic</a></li>
                 <li><a href="transport.php" style="color: #ffd700; font-weight: bold;">Transport</a></li>
                 <li><a href="blog.php">Blog</a></li>
+                <li><a href="statistici.php">Statistici</a></li>
                 <li><a href="#" onclick="openPopup('contactPopup')">Contact</a></li>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
